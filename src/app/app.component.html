@@ -1,0 +1,59 @@
+<html>
+<body>
+    <div class="smart-view">
+    <vg-player>   
+        <table class="smart-view">
+            <tr><td>
+                <video #media
+                    [vgMedia]="media"
+                    [src]="currentItem.src"
+                    id="singleVideo"
+                    preload="auto"
+                    crossorigin>
+                </video>
+            </td></tr>
+
+            <tr><td>
+                <vg-controls>
+                        <app-start-button [playItem]="media"></app-start-button>
+                        <app-pause-button [playItem]="media"></app-pause-button>
+                        <app-volume-up-button [playItem]="media"></app-volume-up-button>
+                        <app-volume-down-button [playItem]="media"></app-volume-down-button>
+                        <app-stop-button [playItem]="media"></app-stop-button>
+                        <app-like-button></app-like-button>
+                        <app-unlike-button></app-unlike-button>
+                    
+                        <vg-scrub-bar>
+                            <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                            <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                        </vg-scrub-bar>
+                    
+                        <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+                    
+                        <vg-volume></vg-volume>
+                    
+                        <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+            </td></tr>
+        </table>
+    </vg-player>    
+    
+    <div>
+        <ul>
+            <li *ngFor="let item of playlist; let $index = index"
+                (click)="onClickPlaylistItem(item, $index)"
+                [class.selected]="item === currentItem">
+                {{ item.title }}  &nbsp;&nbsp;&nbsp; <input type="button" value="Delete Playlist" (click)="deletePlaylistItem()"/>
+            </li>
+        </ul>
+    </div>
+    <form id="ngForm">
+        Title:&nbsp;<input id="title" type="text" ng-model="form.title" maxlength="100"/>
+        <br/>
+        YouTube URL:&nbsp;<input type="text" id="url" ng-model="form.src" maxlength="200"/> &nbsp;&nbsp;&nbsp;
+        <input type="hidden" ng-model="form.type" value="video/mp4" maxlength="200"/> &nbsp;&nbsp;&nbsp;
+        <input type="button" value="Add to Playlist" (click)="addNewPlaylistItem(ngForm)"/>
+    </form>
+</div>
+</body>
+</html>
